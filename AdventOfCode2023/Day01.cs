@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AdventOfCode2023;
+﻿namespace AdventOfCode2023;
 
 public class Day01 : BaseDay
 {
@@ -46,6 +40,6 @@ public class Day01 : BaseDay
 
 internal static class Day01Extensions
 {
-    internal static string FindFirstDigit(this string input) => input.SkipWhile(c => !char.IsDigit(c)).First().ToString();
-    internal static string FindLastDigit(this string input) => input.Reverse().SkipWhile(c => !char.IsDigit(c)).First().ToString();
+    internal static string FindFirstDigit(this string input) => input.First(char.IsDigit).ToString();
+    internal static string FindLastDigit(this string input) => input.Last(char.IsDigit).ToString();
 }
