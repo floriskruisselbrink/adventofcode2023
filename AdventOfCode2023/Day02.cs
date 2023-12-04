@@ -1,11 +1,9 @@
-﻿using System.Text.RegularExpressions;
-
-namespace AdventOfCode2023;
+﻿namespace AdventOfCode2023;
 
 public class Day02 : BaseDay
 {
-    private record Draw(int red, int blue, int green);
-    private record GameRecord(int gameId, Draw[] draws);
+    private record Draw(int Red, int Blue, int Green);
+    private record GameRecord(int GameId, Draw[] Draws);
 
     private readonly IEnumerable<GameRecord> _input;
 
@@ -16,7 +14,7 @@ public class Day02 : BaseDay
 
     public override ValueTask<string> Solve_1() => new(_input
         .Where(IsPossibleGame)
-        .Select(game => game.gameId)
+        .Select(game => game.GameId)
         .Sum()
         .ToString()
     );
@@ -28,21 +26,21 @@ public class Day02 : BaseDay
     );
 
     private bool IsPossibleGame(GameRecord game) =>
-        game.draws.All(draw =>
-            draw.red <= 12 &&
-            draw.green <= 13 &&
-            draw.blue <= 14
+        game.Draws.All((Func<Draw, bool>)(draw =>
+            draw.Red <= 12 &&
+            draw.Green <= 13 &&
+            draw.Blue <= 14)
         );
 
     private int FindMinimumSetOfCubes(GameRecord game)
     {
         int minRed = 0, minGreen = 0, minBlue = 0;
 
-        foreach (var draw in game.draws)
+        foreach (var draw in game.Draws)
         {
-            minRed = Math.Max(minRed, draw.red);
-            minGreen = Math.Max(minGreen, draw.green);
-            minBlue = Math.Max(minBlue, draw.blue);
+            minRed = Math.Max(minRed, draw.Red);
+            minGreen = Math.Max(minGreen, draw.Green);
+            minBlue = Math.Max(minBlue, draw.Blue);
         }
         return minRed * minGreen * minBlue;
     }
@@ -51,7 +49,7 @@ public class Day02 : BaseDay
     {
         return File.ReadAllLines(InputFilePath).Select(line =>
         {
-            var gameId = line.Substring(5, line.IndexOf(':') - 5);
+            var gameId = line[5..line.IndexOf(':')];
 
             var draws = line.Substring(line.IndexOf(':') + 1).Split("; ").Select(draw =>
             {
