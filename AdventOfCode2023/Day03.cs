@@ -75,7 +75,7 @@ public class Day03 : BaseDay
     }
     private Grid<char> ParseInput()
     {
-        var lines = File.ReadAllLines(InputFileDirPath + "\\03.txt");
+        var lines = File.ReadAllLines(InputFilePath);
         var grid = new Grid<char>();
 
         int y = 0;

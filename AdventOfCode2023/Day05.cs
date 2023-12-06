@@ -83,7 +83,7 @@
 
         private (long[], Mapping[]) ParseInput()
         {
-            using var input = new StreamReader(InputFileDirPath + "\\05.txt");
+            using var input = new StreamReader(InputFilePath);
             
             var seeds = input.ReadLine()!.Split(' ').Skip(1).Select(long.Parse);
 
