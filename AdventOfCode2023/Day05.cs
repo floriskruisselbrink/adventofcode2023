@@ -83,46 +83,24 @@
 
         private (long[], Mapping[]) ParseInput()
         {
-            using var input = new StreamReader(InputFilePath);
-            
-            var seeds = input.ReadLine()!.Split(' ').Skip(1).Select(long.Parse);
+            var input = File.ReadAllText(InputFilePath).SplitIntoSections();
 
-            input.ReadLine();
+            var seeds = input[0][7..].Split(' ').Select(long.Parse);
+            var mappings = input.Skip(1).Select(ParseMapping);
 
-            return (seeds.ToArray(), ParseMappings(input).ToArray());
+            return (seeds.ToArray(), mappings.ToArray());
         }
 
-        private IEnumerable<Mapping> ParseMappings(StreamReader input)
+        private Mapping ParseMapping(string input)
         {
-            string? line;
-            string title = "";
-            List<string> mappings = [];
-            while ((line = input.ReadLine()) != null)
-            {
-                if (string.IsNullOrEmpty(line))
-                {
-                    yield return CreateMapping(title, mappings);
-                    title = "";
-                    mappings = [];
-                    continue;
-                }
-
-                if (mappings.Count == 0)
-                {
-                    title = line;
-                    line = input.ReadLine();
-                }
-
-                mappings.Add(line!);
-            }
-
-            yield return CreateMapping(title, mappings); 
-        }
-
-        private Mapping CreateMapping(string title, List<string> mappings)
-        {
-            var m = mappings.Select(s => new Converter(s.Split(' ').Select(long.Parse).ToArray()));
-            return new Mapping(title, m.ToArray());
+            var lines = input.SplitIntoLines();
+            return new Mapping(
+                lines.First(),
+                lines.Skip(1)
+                    .Select(line => line.Split(' ').Select(long.Parse))
+                    .Select(numbers => new Converter(numbers.ToArray()))
+                    .ToArray()
+            );
         }
     }
 }

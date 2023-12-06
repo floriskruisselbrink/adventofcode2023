@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.Tracing;
-
-namespace AdventOfCode2023;
+﻿namespace AdventOfCode;
 
 public class Grid<T>
 {
