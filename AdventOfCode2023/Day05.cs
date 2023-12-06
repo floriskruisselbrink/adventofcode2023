@@ -6,7 +6,6 @@
         {
             internal readonly bool IsEmpty => Start > End;
             internal readonly bool Contains(long value) => value >= Start && value <= End;
-            internal readonly bool Overlaps(LongRange other) => Contains(other.Start) || Contains(other.End);
             
             internal readonly IEnumerable<LongRange> CutWith(LongRange interval)
             {
@@ -25,15 +24,9 @@
 
         record Mapping(string Title, Converter[] Converters)
         {
-            internal long Apply(long seed)
-            {
-                return seed + (Converters.FirstOrDefault(c => c.Source.Contains(seed))?.Delta ?? 0);
-            }
+            internal long Apply(long seed) => seed + (Converters.FirstOrDefault(c => c.Source.Contains(seed))?.Delta ?? 0);
 
-            internal LongRange Apply(LongRange seedRange)
-            {
-                return new LongRange(Apply(seedRange.Start), Apply(seedRange.End));
-            }
+            internal LongRange Apply(LongRange seedRange) => new(Apply(seedRange.Start), Apply(seedRange.End));
 
             internal IEnumerable<LongRange> Cut(LongRange seedRange)
             {
@@ -80,9 +73,9 @@
 
             foreach (var mapping in _mappings)
             {
-                var cutRanges = seedRanges.SelectMany(mapping.Cut);
-                var newRanges = cutRanges.Select(mapping.Apply).Where(r => !r.IsEmpty);
-                seedRanges = newRanges;
+                seedRanges = seedRanges
+                    .SelectMany(mapping.Cut)
+                    .Select(mapping.Apply);
             }
 
             return new(seedRanges.Select(s => s.Start).Min().ToString());
