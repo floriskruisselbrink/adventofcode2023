@@ -49,7 +49,7 @@ public class Day03 : BaseDay
                 else if (char.IsDigit(_input[x, y]))
                 {
                     currentNumber = currentNumber * 10 + (_input[x, y] - '0');
-                    foreach (var neighbour in _input.Neighbours((x, y), true))
+                    foreach (var neighbour in _input.Neighbours(new Coords(x, y), true))
                     {
                         if (!char.IsDigit(neighbour.Value) && symbolTest(neighbour.Value))
                         {

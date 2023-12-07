@@ -1,4 +1,5 @@
 ﻿namespace AdventOfCode2023;
+
 public class Day07 : BaseDay
 {
     private enum HandType
@@ -90,7 +91,7 @@ public class Day07 : BaseDay
     }
 
     public override ValueTask<string> Solve_1() => new(Solve(false).ToString());
-    public override ValueTask<string> Solve_2() => new(Solve(true).ToString()); // 250735611 is too high
+    public override ValueTask<string> Solve_2() => new(Solve(true).ToString());
 
     private long Solve(bool withJokers) => _input
         .Select(line => new CamelHand(line, withJokers))

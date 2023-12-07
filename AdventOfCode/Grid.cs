@@ -2,46 +2,45 @@
 
 public class Grid<T>
 {
-    private readonly IDictionary<(int, int), T> _grid = new Dictionary<(int, int), T>();
+    private readonly Dictionary<Coords, T> _grid = [];
 
     public GridMember<T> this[int x, int y]
     {
-        get { return _grid.TryGetValue((x, y), out var t) ? new GridMember<T>(x, y, t) : new GridMember<T>(x, y); }
-        set { _grid[(x, y)] = value.Value; }
+        get { return _grid.TryGetValue(new Coords(x, y), out var t) ? new GridMember<T>(x, y, t) : new GridMember<T>(x, y); }
+        set { _grid[new Coords(x, y)] = value.Value; }
     }
 
-    public IEnumerable<(int x, int y, T value)> AllMembers()
+    public GridMember<T> this[Coords location]
+    {
+        get { return this[location.X, location.Y]; }
+        set { this[location.X, location.Y] = value; }
+    }
+
+    public IEnumerable<(Coords location, T value)> AllMembers()
     {
         foreach (var t in _grid)
         {
-            yield return (t.Key.Item1, t.Key.Item2, t.Value);
+            yield return (t.Key, t.Value);
         }
     }
 
-    public IEnumerable<GridMember<T>> Neighbours((int x, int y) location, bool includeDiagonal)
+    public IEnumerable<GridMember<T>> Neighbours(Coords location, bool includeDiagonal)
     {
-        for (int x = -1; x <= 1; x++)
+        var neighbours = includeDiagonal ? location.Adjacents : location.Neighbors;
+        foreach (var neighbour in neighbours)
         {
-            for (int y = -1; y <= 1; y++)
+            var m = this[neighbour];
+            if (m.Exists)
             {
-                if (x == 0 && y == 0 || (x * y != 0 && !includeDiagonal))
-                {
-                    continue;
-                }
-
-                var m = this[location.x + x, location.y + y];
-                if (m.Exists)
-                {
-                    yield return m;
-                }
+                yield return m;
             }
         }
     }
 
     public (int minX, int minY, int maxX, int maxY) CalculateBounds()
     {
-        var xRange = _grid.Keys.Select(k => k.Item1);
-        var yRange = _grid.Keys.Select(k => k.Item2);
+        var xRange = _grid.Keys.Select(k => k.X);
+        var yRange = _grid.Keys.Select(k => k.Y);
 
         return (xRange.Min(), yRange.Min(), xRange.Max(), yRange.Max());
     }
