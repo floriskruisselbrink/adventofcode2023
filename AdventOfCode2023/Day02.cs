@@ -47,7 +47,7 @@ public class Day02 : BaseDay
 
     private IEnumerable<GameRecord> ParseInput()
     {
-        return File.ReadAllLines(InputFilePath).Select(line =>
+        return AocDownloader.GetInput(2023, 2).SplitIntoLines().Select(line =>
         {
             var gameId = line[5..line.IndexOf(':')];
 
@@ -73,6 +73,6 @@ public class Day02 : BaseDay
             }).ToArray();
 
             return new GameRecord(int.Parse(gameId), draws);
-        });
+        }).ToArray();
     }
 }

@@ -41,7 +41,7 @@ public class Day06 : BaseDay
 
     private (Race[] part1, Race part2) ParseInput()
     {
-        var input = File.ReadAllLines(InputFilePath);
+        var input = AocDownloader.GetInput(2023, 6).SplitIntoLines().ToArray();
         var times1 = input[0][10..].Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(long.Parse);
         var distances1 = input[1][10..].Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(long.Parse);
 

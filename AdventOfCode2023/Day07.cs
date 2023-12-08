@@ -99,5 +99,6 @@ public class Day07 : BaseDay
         .Select((hand, i) => hand.Bid * (i + 1))
         .Sum();
 
-    private string[] ParseInput() => File.ReadAllLines(InputFilePath);
+    private static string[] ParseInput() 
+        => AocDownloader.GetInput(2023, 7).SplitIntoLines().ToArray();
 }

@@ -83,10 +83,10 @@ public class Day05 : BaseDay
 
     private (long[], Mapping[]) ParseInput()
     {
-        var input = File.ReadAllText(InputFilePath).SplitIntoSections();
+        var input = AocDownloader.GetInput(2023, 5).SplitIntoSections();
 
-        var seeds = input[0][7..].Split(' ').Select(long.Parse);
-        var mappings = input.Skip(1).Select(ParseMapping);
+        var seeds = input.First()[7..].Split(' ').Select(long.Parse);
+        var mappings = input.Select(ParseMapping);
 
         return (seeds.ToArray(), mappings.ToArray());
     }

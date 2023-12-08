@@ -43,10 +43,11 @@ public class Day08 : BaseDay
         _ => throw new ArgumentOutOfRangeException(nameof(instructionIndex), "Verwacht alleen L/R")
     };
 
-    private (string, Dictionary<string, (string, string)>) ParseInput()
+    private static (string, Dictionary<string, (string, string)>) ParseInput()
     {
-        var input = File.ReadAllLines(InputFilePath);
-        var maps = input[2..].Select(line => (line[0..3], (line[7..10], line[12..15]))).ToDictionary();
-        return (input[0], maps);
+        var input = AocDownloader.GetInput(2023, 8).SplitIntoLines();
+        var instructions = input.First();
+        var maps = input.Skip(1).Select(line => (line[0..3], (line[7..10], line[12..15]))).ToDictionary();
+        return (instructions, maps);
     }
 }

@@ -75,7 +75,7 @@ public class Day03 : BaseDay
     }
     private Grid<char> ParseInput()
     {
-        var lines = File.ReadAllLines(InputFilePath);
+        var lines = AocDownloader.GetInput(2023, 3).SplitIntoLines();
         var grid = new Grid<char>();
 
         int y = 0;

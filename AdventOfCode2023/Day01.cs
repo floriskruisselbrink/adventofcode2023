@@ -6,7 +6,7 @@ public class Day01 : BaseDay
 
     public Day01()
     {
-        _input = File.ReadAllLines(InputFilePath);
+        _input = AocDownloader.GetInput(2023, 1).SplitIntoLines().ToArray();
     }
 
     public override ValueTask<string> Solve_1() => new(

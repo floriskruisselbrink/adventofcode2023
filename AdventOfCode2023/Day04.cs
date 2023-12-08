@@ -34,7 +34,7 @@ public class Day04 : BaseDay
 
     private IEnumerable<ScratchCard> ParseInput()
     {
-        return File.ReadLines(InputFilePath).Select(line =>
+        return AocDownloader.GetInput(2023, 4).SplitIntoLines().Select(line =>
         {
             var parts = line.Split(':', '|');
             var cardId = int.Parse(parts[0].Substring(parts[0].IndexOf(' ') + 1));
