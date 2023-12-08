@@ -17,7 +17,7 @@ public class Day07 : BaseDay
     {
         public CamelHand(string input, bool withJokers): this(input[0..5], int.Parse(input[6..]), withJokers) {}
 
-        public HandType HandType { get; } = CalculateHandType(Cards, WithJokers);
+        private readonly HandType _handType = CalculateHandType(Cards, WithJokers);
         private readonly string _sortKey = CalculateSortKey(Cards, WithJokers);
 
         public int CompareTo(CamelHand? other)
@@ -27,7 +27,7 @@ public class Day07 : BaseDay
                 return 1;
             }
 
-            int result = HandType.CompareTo(other.HandType);
+            int result = _handType.CompareTo(other._handType);
             if (result == 0)
             {
                 result = _sortKey.CompareTo(other._sortKey);

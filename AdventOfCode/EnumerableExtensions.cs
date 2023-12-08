@@ -1,9 +1,11 @@
-﻿namespace AdventOfCode;
+﻿using System.Numerics;
+
+namespace AdventOfCode;
 
 public static class EnumerableExtensions
 {
-    public static long Product(this IEnumerable<long> list)
+    public static T Product<T>(this IEnumerable<T> list) where T : INumber<T>
     {
-        return list.Aggregate(1L, (a, b) => a * b);
+        return list.Aggregate(T.One, (a, b) => a * b);
     }
 }
