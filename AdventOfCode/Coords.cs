@@ -2,6 +2,7 @@
 
 public readonly record struct Coords(int X, int Y)
 {
+    
     public static Coords operator +(Coords a, Coords b) => new(a.X + b.X, a.Y + b.Y);
     public static Coords operator +(Coords a, (int x, int y) b) => new(a.X + b.x, a.Y + b.y);
     public static Coords operator -(Coords a, Coords b) => new(a.X - b.X, a.Y - b.Y);
@@ -28,4 +29,9 @@ public readonly record struct Coords(int X, int Y)
     public Coords[] Neighbors => new[] { Left, Up, Right, Down };
     /// <summary>Horizontal, Vertical & Diagonal</summary>
     public Coords[] Adjacents => new[] { Left, UpLeft, Up, UpRight, Right, DownRight, Down, DownLeft };
+
+    public override string? ToString()
+    {
+        return $"({X},{Y})";
+    }
 }

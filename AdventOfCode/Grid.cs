@@ -16,6 +16,8 @@ public class Grid<T>
         set { this[location.X, location.Y] = value; }
     }
 
+    public int Count => _grid.Count;
+
     public IEnumerable<(Coords location, T value)> AllMembers()
     {
         foreach (var t in _grid)
