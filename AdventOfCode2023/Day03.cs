@@ -27,15 +27,15 @@ public class Day03 : BaseDay
 
     private IEnumerable<(int x, int y, int number)> FindPartNumbers(Func<char, bool> symbolTest)
     {
-        var bounds = _input.CalculateBounds();
+        var (min, max) = _input.CalculateBounds();
 
-        for (int y = bounds.minY; y <= bounds.maxY; y++)
+        for (int y = min.Y; y <= max.Y; y++)
         {
             int currentNumber = 0;
             bool currentAdjacent = false;
             int currentX = -1;
             int currentY = -1;
-            for (int x = bounds.minX; x <= bounds.maxX; x++)
+            for (int x = min.X; x <= max.X; x++)
             {
                 if (!_input[x, y].Exists)
                 {

@@ -39,12 +39,24 @@ public class Grid<T>
         }
     }
 
-    public (int minX, int minY, int maxX, int maxY) CalculateBounds()
+    public (int min, int max) MinMaxX()
     {
         var xRange = _grid.Keys.Select(k => k.X);
-        var yRange = _grid.Keys.Select(k => k.Y);
+        return (xRange.Min(), xRange.Max());
+    }
 
-        return (xRange.Min(), yRange.Min(), xRange.Max(), yRange.Max());
+    public (int min, int max) MinMaxY()
+    {
+        var yRange = _grid.Keys.Select(k => k.Y);
+        return (yRange.Min(), yRange.Max());
+    }
+
+    public (Coords min, Coords max) CalculateBounds()
+    {
+        var xRange = MinMaxX();
+        var yRange = MinMaxY();
+
+        return (new Coords(xRange.min, yRange.min), new Coords(xRange.max, yRange.max));
     }
 }
 

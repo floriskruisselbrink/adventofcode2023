@@ -29,6 +29,8 @@ public readonly record struct Coords(int X, int Y)
     public Coords[] Neighbors => new[] { Left, Up, Right, Down };
     /// <summary>Horizontal, Vertical & Diagonal</summary>
     public Coords[] Adjacents => new[] { Left, UpLeft, Up, UpRight, Right, DownRight, Down, DownLeft };
+    /// <summary>Manhattan Distance</summary>
+    public int DistanceTo(Coords target) => Math.Abs(target.X - X) + Math.Abs(target.Y - Y);
 
     public override string? ToString()
     {
