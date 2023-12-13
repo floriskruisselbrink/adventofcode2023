@@ -20,6 +20,7 @@ public static class SolutionTests
     [TestCase(typeof(Day10), "7107", "281")]
     [TestCase(typeof(Day11), "9418609", "593821230983")]
     [TestCase(typeof(Day12), "6827", "1537505634471")]
+    [TestCase(typeof(Day13), "27505", "22906")]    
     public static void Test(Type type, string solution1, string solution2)
     {
         if (Activator.CreateInstance(type) is BaseProblem instance)
