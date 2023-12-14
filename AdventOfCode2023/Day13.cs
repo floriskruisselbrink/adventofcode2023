@@ -52,13 +52,10 @@ public class Day13 : BaseDay
             return 0;
         }
 
-        private IEnumerable<int> FindMirrors()
-        {
-            var mirrors = new List<int>();
-            mirrors.AddRange(_vertical.FindReflections().Select(m => 100 * m));
-            mirrors.AddRange(_horizontal.FindReflections());
-            return mirrors.Where(m => m > 0);
-        }
+        private IEnumerable<int> FindMirrors() =>
+            _vertical.FindReflections().Select(m => 100 * m)
+            .Concat(_horizontal.FindReflections())
+            .Where(m => m > 0);
 
         private IEnumerable<MirrorValley> AllVariations()
         {
