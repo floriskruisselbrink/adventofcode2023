@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AdventOfCode2023.Test;
+﻿namespace AdventOfCode2023.Test;
 
 public static class SolutionTests
 {
@@ -26,6 +20,7 @@ public static class SolutionTests
     // [TestCase(typeof(Day16), "8249", "8444")]
     [TestCase(typeof(Day18), "34329", "42617947302920")]
     [TestCase(typeof(Day19), "342650", "130303473508222")]
+    [TestCase(typeof(Day20), "980457412", "232774988886497")]
     public static void Test(Type type, string solution1, string solution2)
     {
         if (Activator.CreateInstance(type) is BaseProblem instance)

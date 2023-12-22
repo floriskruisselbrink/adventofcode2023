@@ -2,35 +2,20 @@
 
 public class Day05 : BaseDay
 {
-    record struct LongRange(long Start, long End)
+    record Converter(Range<long> Source, long Delta)
     {
-        internal readonly bool IsEmpty => Start > End;
-        internal readonly bool Contains(long value) => value >= Start && value <= End;
-        
-        internal readonly IEnumerable<LongRange> CutWith(LongRange interval)
-        {
-            var before = new LongRange(Math.Min(Start, interval.Start), Math.Min(End, interval.Start - 1));
-            var inside = new LongRange(Math.Max(Start, interval.Start), Math.Min(End, interval.End));
-            var after = new LongRange(Math.Max(Start, interval.End + 1), Math.Max(End, interval.End));
-            var result = new List<LongRange> { before, inside, after }.Where(r => !r.IsEmpty);
-            return result;
-        }
-    }
-
-    record Converter(LongRange Source, long Delta)
-    {
-        internal Converter(long[] numbers) : this(new LongRange(numbers[1], numbers[1] + numbers[2] - 1), numbers[0] - numbers[1]) { }
+        internal Converter(long[] numbers) : this(new Range<long>(numbers[1], numbers[1] + numbers[2] - 1), numbers[0] - numbers[1]) { }
     }
 
     record Mapping(string Title, Converter[] Converters)
     {
         internal long Apply(long seed) => seed + (Converters.FirstOrDefault(c => c.Source.Contains(seed))?.Delta ?? 0);
 
-        internal LongRange Apply(LongRange seedRange) => new(Apply(seedRange.Start), Apply(seedRange.End));
+        internal Range<long> Apply(Range<long> seedRange) => new(Apply(seedRange.Start), Apply(seedRange.End));
 
-        internal IEnumerable<LongRange> Cut(LongRange seedRange)
+        internal IEnumerable<Range<long>> Cut(Range<long> seedRange)
         {
-            var ranges = new List<LongRange> { seedRange };
+            var ranges = new List<Range<long>> { seedRange };
             foreach (var converter in Converters)
             {
                 for (int i = ranges.Count -1 ; i >= 0; i--)
@@ -69,7 +54,7 @@ public class Day05 : BaseDay
 
     public override ValueTask<string> Solve_2()
     {
-        var seedRanges = _seeds.Chunk(2).Select(s => new LongRange(s[0], s[0] + s[1] - 1));
+        var seedRanges = _seeds.Chunk(2).Select(s => new Range<long>(s[0], s[0] + s[1] - 1));
 
         foreach (var mapping in _mappings)
         {

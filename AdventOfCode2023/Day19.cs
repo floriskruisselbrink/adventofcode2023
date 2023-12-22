@@ -145,7 +145,7 @@ public class Day19 : BaseDay
 
     private record class PossibleParts(string Workflow, Dictionary<char, Range<int>> Ratings)
     {
-        public long Combinations() => Ratings.Values.Select(r => 1L * r.Length).Product();
+        public long Combinations() => Ratings.Values.Product(r => 1L * r.Length);
 
         public PossibleParts Duplicate()
             => new(Workflow, Ratings.ToDictionary(kv => kv.Key, kv => kv.Value));

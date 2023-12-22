@@ -4,9 +4,15 @@ namespace AdventOfCode;
 
 public static class EnumerableExtensions
 {
-    public static T Product<T>(this IEnumerable<T> list) where T : INumber<T>
+    public static T Product<T>(this IEnumerable<T> source) where T : INumber<T>
     {
-        return list.Aggregate(T.One, (a, b) => a * b);
+        return source.Aggregate(T.One, (a, b) => a * b);
+    }
+
+    public static TResult Product<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> selector) 
+        where TResult : INumber<TResult>
+    {
+        return source.Select(selector).Product();
     }
 
     public static IEnumerable<(T item, int index)> WithIndex<T>(this IEnumerable<T> source)
